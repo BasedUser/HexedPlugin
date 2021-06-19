@@ -1,8 +1,0 @@
-hexed/HexData.java
- hexed.HexData
- hexed.HexData$HexCaptureEvent
- hexed.HexData$HexMoveEvent
- hexed.HexData$HexTeam
- hexed.HexData$ProgressIncreaseEvent
-hexed/Hex.java
- hexed.Hex

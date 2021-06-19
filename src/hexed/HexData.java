@@ -8,15 +8,10 @@ import mindustry.game.*;
 import mindustry.gen.*;
 
 public class HexData{
-    /** All hexes on the map. No order. */
     private Seq<Hex> hexes = new Seq<>();
-    /** Maps world pos -> hex */
     private IntMap<Hex> hexPos = new IntMap<>();
-    /** Maps team ID -> player */
     private IntMap<Player> teamMap = new IntMap<>();
-    /** Maps team ID -> list of controlled hexes */
     private IntMap<Seq<Hex>> control = new IntMap<>();
-    /** Data of specific teams. */
     private HexTeam[] teamData = new HexTeam[256];
 
     public void updateStats(){
@@ -70,7 +65,6 @@ public class HexData{
         hexes.each(Hex::updateController);
     }
 
-    /** Allocates a new array of players sorted by score, descending. */
     public Seq<Player> getLeaderboard(){
         Seq<Player> players = new Seq<>();
         Groups.player.copy(players);
@@ -103,6 +97,21 @@ public class HexData{
 
     public Seq<Hex> hexes(){
         return hexes;
+    }
+    
+    public IntSeq getHex(int width, int height){	
+        IntSeq array = new IntSeq();
+        double h = Math.sqrt(3) * Hex.spacing/2;
+        //base horizontal spacing=1.5w
+        //offset = 3/4w
+        for(int x = 0; x < width / Hex.spacing - 2; x++){
+            for(int y = 0; y < height / (h/2) - 2; y++){
+                int cx = (int)(x * Hex.spacing*1.5 + (y%2)* Hex.spacing*3.0/4) + Hex.spacing/2;
+                int cy = (int)(y * h / 2) + Hex.spacing/2;
+                array.add(Point2.pack(cx, cy));
+            }
+        }
+        return array;
     }
 
     public @Nullable Hex getHex(int position){
